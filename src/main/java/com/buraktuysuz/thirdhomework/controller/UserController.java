@@ -1,5 +1,7 @@
 package com.buraktuysuz.thirdhomework.controller;
 
+import com.buraktuysuz.thirdhomework.converter.UserConverter;
+import com.buraktuysuz.thirdhomework.dto.UserRegisterDto;
 import com.buraktuysuz.thirdhomework.entity.User;
 import com.buraktuysuz.thirdhomework.service.entityService.UserEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,14 +34,16 @@ public class UserController {
         return userEntityService.finUserById(id);
     }
     @PostMapping("/")
-    public User saveUser(@RequestBody User user){
+
+    public User saveUser(@RequestBody UserRegisterDto userRegisterDto){
+        User user=  UserConverter.INSTANCE.ConvertUserRegisterDtoToUser(userRegisterDto);
         return userEntityService.save(user);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable String id){
         if(userEntityService.checkUserById(id)){
-            throw new NotFoundException("User Not Found");
+            return new ResponseEntity<>("User Not Found", NOT_FOUND);
         }
 
         try {

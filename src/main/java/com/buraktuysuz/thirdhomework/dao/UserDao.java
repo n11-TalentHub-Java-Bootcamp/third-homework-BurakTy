@@ -11,5 +11,5 @@ import java.util.List;
 @Repository
 public interface UserDao extends MongoRepository<User,String> {
     @Query("{'username':?0}")
-    User findUserByUsername(String name);
+    List<User> findUserByUsername(String name);
 }

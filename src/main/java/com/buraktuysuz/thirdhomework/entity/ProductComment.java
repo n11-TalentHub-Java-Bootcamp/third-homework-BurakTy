@@ -33,17 +33,9 @@ public class ProductComment {
         this.commentDate = commentDate;
     }
 
-    public String getProduct() {
-        return productId;
-    }
-    public void setProduct(String product) {
-        this.productId = productId;
-    }
+    public String getProductId() { return productId;  }
+    public void setProductId(String productId) { this.productId = productId; }
 
-    public String getUser() {
-        return userId;
-    }
-    public void setUser(String userId) {
-        this.userId = userId;
-    }
+    public String getUserId() { return userId; }
+    public void setUserId(String userId) { this.userId = userId;  }
 }

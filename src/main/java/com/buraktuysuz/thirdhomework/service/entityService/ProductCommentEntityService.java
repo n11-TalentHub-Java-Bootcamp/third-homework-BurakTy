@@ -6,6 +6,7 @@ import com.buraktuysuz.thirdhomework.entity.ProductComment;
 import com.buraktuysuz.thirdhomework.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.webjars.NotFoundException;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,11 +17,11 @@ public class ProductCommentEntityService {
     @Autowired
     ProductCommentDao productCommentDao;
 
-    public List<ProductComment> findAllUser(){
+    public List<ProductComment> findAllComment(){
         return productCommentDao.findAll();
     }
 
-    public ProductComment finUserById(String Id){
+    public ProductComment findCommentById(String Id){
         Optional<ProductComment> optional = productCommentDao.findById(Id);
 
         ProductComment productComment = null;
@@ -30,7 +31,20 @@ public class ProductCommentEntityService {
         return productComment;
     }
 
+    public boolean checkProductComment(String id){
+        var comment = findCommentById(id);
+        return comment!=null?false:true;
+    }
+
     public ProductComment save(ProductComment productComment){
         return productCommentDao.save(productComment);
+    }
+
+    public void  deleteById(String id){
+        if(!checkProductComment(id)){
+            productCommentDao.deleteById(id);
+            return;
+        }
+        throw new  NotFoundException("Comment Not Found");
     }
 }
